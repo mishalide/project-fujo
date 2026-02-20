@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fujo Betting Test</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #111;
+      color: #eee;
+      padding: 20px;
+    }
+    h2 { margin-top: 2em; }
+    button {
+      padding: 6px 12px;
+      margin: 4px;
+      cursor: pointer;
+    }
+    select, input {
+      padding: 6px;
+      margin: 4px;
+    }
+    pre {
+      background: #1e1e1e;
+      padding: 10px;
+      overflow-x: auto;
+    }
+    .row { margin-bottom: 8px; }
+    .error { color: #ff6b6b; }
+    .ok { color: #7CFC00; }
+  </style>
+</head>
+<body>
+
+<h1>Fujo Betting — Test Frontend</h1>
+
+<div class="row">
+  <button onclick="loadUsers()">Load Users</button>
+  <button onclick="loadMatches()">Load Matches</button>
+</div>
+
+<h2>Users</h2>
+<select id="userSelect"></select>
+
+<h2>Matches</h2>
+<select id="matchSelect"></select>
+
+<h2>Place Bet</h2>
+<div class="row">
+  <label>
+    Side:
+    <select id="side">
+      <option value="blue">Blue</option>
+      <option value="red">Red</option>
+    </select>
+  </label>
+</div>
+
+<div class="row">
+  <label>
+    Stake:
+    <input id="stake" type="number" min="1" />
+  </label>
+</div>
+
+<button onclick="placeBet()">Submit Bet</button>
+
+<h2>Response</h2>
+<pre id="output"></pre>
+
+<script>
+const API_BASE = "https://fujo-worker.misha-a-golubev.workers.dev";
+
+const output = document.getElementById("output");
+const userSelect = document.getElementById("userSelect");
+const matchSelect = document.getElementById("matchSelect");
+
+function log(obj, ok = true) {
+  output.textContent = JSON.stringify(obj, null, 2);
+  output.className = ok ? "ok" : "error";
+}
+
+async function loadUsers() {
+  try {
+    const res = await fetch(`${API_BASE}/api/users`);
+    const data = await res.json();
+    userSelect.innerHTML = "";
+
+    for (const u of data.users) {
+      const opt = document.createElement("option");
+      opt.value = u.user_id;
+      opt.textContent = `${u.user_id} — ${u.balance}`;
+      userSelect.appendChild(opt);
+    }
+
+    log(data);
+  } catch (e) {
+    log({ error: e.message }, false);
+  }
+}
+
+async function loadMatches() {
+  try {
+    const res = await fetch(`${API_BASE}/api/matches`);
+    const data = await res.json();
+    matchSelect.innerHTML = "";
+
+    for (const m of data.matches) {
+      const opt = document.createElement("option");
+      opt.value = m.match_id;
+      opt.textContent =
+        `${m.match_id} | ${m.blue_team} vs ${m.red_team} | ${m.market_status}`;
+      matchSelect.appendChild(opt);
+    }
+
+    log(data);
+  } catch (e) {
+    log({ error: e.message }, false);
+  }
+}
+
+async function placeBet() {
+  const user_id = userSelect.value;
+  const match_id = matchSelect.value;
+  const side = document.getElementById("side").value;
+  const stake = Number(document.getElementById("stake").value);
+
+  try {
+    const res = await fetch(`${API_BASE}/api/bets`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id, match_id, side, stake })
+    });
+
+    const data = await res.json();
+    log(data, !data.error);
+  } catch (e) {
+    log({ error: e.message }, false);
+  }
+}
+</script>
+
+</body>
+</html>
