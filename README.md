@@ -19,3 +19,7 @@ tech stack
 - backend: cloudflare workers and google appscripts
 - database: google sheets
 
+
+ahem ahem ought to shut this down too
+
+<img width="488" height="76" alt="image" src="https://github.com/user-attachments/assets/f9859060-643a-460d-b969-b9e829a5693f" />
