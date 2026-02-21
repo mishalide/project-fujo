@@ -1,4 +1,6 @@
-# this project is NOT complete; there is currently no proper frontend, but the sheet and all backend functions function !!
+# this project has been shut down by Pearadox's mentors and will not be being continued
+
+project fujo is NOW fully functional!
 
 # project-fujo
 an frc analytics platform!
