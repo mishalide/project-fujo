@@ -1,4 +1,4 @@
-# this project has been shut down by Pearadox's mentors and will not be being continued
+# please consult the license 
 
 project fujo is NOW fully functional!
 
