@@ -3,7 +3,7 @@ Copyright (c) 2026 Mishalide
 All rights reserved.
 
 Project Status:
-Development of this project has been discontinued. Paradox Robotics Team 5414’s mentors have instructed me to stop working on this project and have threatened retaliatory action should I continue. The project is semi-functional and unfinished. No further development will occur.
+Development of this project has been discontinued. Pearadox Robotics Team 5414’s mentors have instructed me to stop working on this project and have threatened retaliatory action should I continue. The project is semi-functional and unfinished. No further development will occur.
 
 Ownership:
 This project, including all source code, documentation, and related materials, belongs exclusively to the copyright holder (Mishalide). No ownership or license is granted to any other party except as explicitly stated below.
